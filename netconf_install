@@ -17,6 +17,8 @@ build ()
       add_systemd_unit "systemd-networkd.socket"
       systemctl --root "$BUILDROOT" enable systemd-networkd.service
       systemctl --root "$BUILDROOT" enable systemd-networkd.socket
+      getent passwd systemd-network >>"$BUILDROOT/etc/passwd"
+      getent group systemd-network >>"$BUILDROOT/etc/group"
       add_dir "/etc/systemd/network"
       ls /etc/systemd/network/*.initramfs > /dev/null 2>&1
       if [ $? -ne 0 ]; then
